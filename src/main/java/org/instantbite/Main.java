@@ -1,6 +1,7 @@
 package org.instantbite;
 
 import org.instantbite.config.DBConnection;
+import org.instantbite.model.User;
 import org.instantbite.services.FoodService;
 
 import java.sql.Connection;
@@ -38,6 +39,13 @@ public class Main {
                 case 2:
                     foodService.displayFood();
                     break;
+                    case 3:
+                        foodService.displayFood();
+                        System.out.println("Select food from above: ");
+                        int foodId = scanner.nextInt();
+                        System.out.println("Select quantity: ");
+                        int quantity = scanner.nextInt();
+
             }
         }
     }
@@ -45,14 +53,16 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         FoodService foodService = new FoodService();
 
-
-        Connection connection = DBConnection.getConnection();
-        System.out.println(connection);
+        User currentUser = null;
 
         while (true) {
             System.out.println("\nFood APP");
             System.out.println("1. Register");
             System.out.println("2. Login");
+            System.out.println("3. View Foods");
+            System.out.println("4. Place Order");
+            System.out.println("5. Exit");
+
 
             System.out.print("Enter choice: ");
             int select = scanner.nextInt();
@@ -71,8 +81,6 @@ public class Main {
                     password = scanner.nextLine();
 
                     foodService.register(fullName, email, password);
-
-                    foodApp();
                     break;
                 case 2:
                     scanner.nextLine();
@@ -82,13 +90,38 @@ public class Main {
                     System.out.print("Enter password: ");
                     password = scanner.nextLine();
 
-                    foodService.login(email, password);
+                   currentUser = foodService.login(email, password);
 
-                    foodApp();
+                   if (currentUser != null) {
+                       System.out.println("\n Welcome " + currentUser.getFullName());
+                   }else {
+                       System.out.println("\nInvalid email or password");
+                   }
                     break;
-                    case 3:
-                        System.out.println("Goodbye!");
+                case 3:
+                    System.out.println("==== Available Foods ====");
+                    foodService.displayFood();
+                    break;
+                    case 4:
+
+                        if(currentUser==null) {
+                            System.out.println("\nPlease Long in first");
+
+                            break;
+                        }
+                        foodService.displayFood();
+
+                        System.out.print("Enter food ID: ");
+                        int foodId = scanner.nextInt();
+                        System.out.println("Select quantity: ");
+                        int quantity = scanner.nextInt();
+
+                        foodService.orderFood(foodId, currentUser.getId(), quantity);
+
                         break;
+                        default:
+                            System.out.println("Invalid choice");
+
 
             }
         }

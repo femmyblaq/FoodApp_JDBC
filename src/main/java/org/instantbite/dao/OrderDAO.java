@@ -12,24 +12,26 @@ public  class OrderDAO {
 
     public static void placeOrder(Order order)
     {
-      String sql = "INSERT INTO orders (food_id, quantity, total) VALUES (?, ?, ?)";
+      String sql = "INSERT INTO orders (food_id, user_id, quantity, total) VALUES (?, ?, ?, ?)";
 
       try (
               Connection conn = DBConnection.getConnection();
               PreparedStatement ps = conn.prepareStatement(sql);
       ){
           ps.setInt(1, order.getFoodId());
-          ps.setInt(2, order.getQuantity());
-          ps.setDouble(3, order.getTotal());
+          ps.setInt(2, order.getUserId());
+          ps.setInt(3, order.getQuantity());
+          ps.setDouble(4, order.getTotal());
 
-          int row = ps.executeUpdate();
+          ps.executeUpdate();
+
       }catch (Exception e) {
           System.out.println(e.getMessage());
       }
     }
 
     public static Double getFoodPrice(int foodId) {
-        String sql = "SELECT * FROM orders WHERE food_id = ?";
+        String sql = "SELECT * FROM food WHERE id = ?";
 
         try(
                 Connection conn = DBConnection.getConnection();

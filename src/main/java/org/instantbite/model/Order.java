@@ -2,11 +2,13 @@ package org.instantbite.model;
 
 public class Order {
     private int foodId;
+    private int userId;
     private int quantity;
     private double total;
 
-    public Order(int foodId, int quantity, double total) {
+    public Order(int foodId, int userId, int quantity, double total) {
         this.foodId = foodId;
+        this.userId = userId;
         this.quantity = quantity;
         this.total = total;
     }
@@ -18,6 +20,8 @@ public class Order {
     public void setFoodId(int foodId) {
         this.foodId = foodId;
     }
+
+    public int getUserId() {return userId;}
 
     public int getQuantity() {
         return quantity;

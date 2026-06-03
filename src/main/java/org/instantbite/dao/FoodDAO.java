@@ -36,7 +36,7 @@ public class FoodDAO {
         {
             while(rs.next()) {
                 System.out.println(rs.getInt("id") + " | " +
-                                    rs.getString("name") + " | " +
+                                    rs.getString("name") + " | $" +
                                     rs.getDouble("price") );
             }
         }catch (Exception e) {

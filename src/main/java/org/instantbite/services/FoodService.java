@@ -20,15 +20,16 @@ public class FoodService {
         foodDAO.viewFood();
     }
 
-    public void orderFood(int foodId, int quantity) {
+    public void orderFood(int foodId, int userId, int quantity) {
         double price = OrderDAO.getFoodPrice(foodId);
         double total = price * quantity;
 
-        Order order = new Order(foodId, quantity, total);
+        Order order = new Order(foodId, userId, quantity, total);
 
         OrderDAO.placeOrder(order);
 
-        System.out.println("Total price: " + total);
+        System.out.println("Total price: $" + total);
+        System.out.println("Order has been placed successfully..");
     }
 
     public void register(String fullName, String email, String password) {
@@ -38,7 +39,7 @@ public class FoodService {
         System.out.println("User registered successfully.");
     }
 
-    public boolean login(String email, String password) {
+    public User login(String email, String password) {
         try {
             ResultSet rs = UserDAO.findEmail(email);
                 if(rs.next()) {
@@ -46,13 +47,18 @@ public class FoodService {
                     if(password.equals(password2)) {
                         System.out.println("Login successful.");
 
-                        return true;
+                        return new User(
+                                rs.getInt("id"),
+                                rs.getString("full_name"),
+                                rs.getString("email"),
+                                password2
+                        );
                     }
                 }
         }catch(Exception e) {
             System.out.println("Invalid email or password.");
         }
         System.out.println("Invalid Credentials.");
-        return false;
+        return null;
     }
 }

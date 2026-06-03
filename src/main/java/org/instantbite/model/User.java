@@ -1,13 +1,24 @@
 package org.instantbite.model;
 
 public class User {
+    private int id;
     private String fullName;
     private String email;
     private String password;
+    public User(int id, String fullName, String email, String password) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+    }
+
     public User(String fullName, String email, String password) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
+    }
+
+    public User(int id, String fullName, String email) {
     }
 
     public String getFullName() {
@@ -17,6 +28,8 @@ public class User {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
+
+    public int getId() {return id;}
 
     public String getEmail() {
         return email;

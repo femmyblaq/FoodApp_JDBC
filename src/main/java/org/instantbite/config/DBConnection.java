@@ -8,9 +8,9 @@ import java.sql.DriverManager;
 //private static final String password = System.getenv("DB_PASSWORD");
 
 public class DBConnection {
-    private static final String url = System.getenv("DB_URL");
-    private static final String user = System.getenv("DB_USERNAME");
-    private static final String password = System.getenv("DB_USERNAME");
+    private static final String url = "jdbc:mysql://localhost:3306/food_app?useSSL=false&serverTimezone=UTC";
+    private static final String user = "root";
+    private static final String password = "Femmy@4221";
 
 
 
